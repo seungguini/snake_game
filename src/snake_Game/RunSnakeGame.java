@@ -22,12 +22,12 @@ import processing.core.PApplet;
 
 public class RunSnakeGame extends PApplet{
 	
-	public Snake[] snakes = makeSnakes(5); // INCLUDES player snake (i.e. 5 snakes would be 1 player + 4 enemies)
+	public Snake[] snakes = makeSnakes(3); // INCLUDES player snake (i.e. 5 snakes would be 1 player + 4 enemies)
 
 	
 	/* SETUP */
 	public void setup() {
-		frameRate(15);
+		frameRate(10);
 		size (400,400); // setup canvas
 	}
 	
@@ -43,18 +43,18 @@ public class RunSnakeGame extends PApplet{
 		
 		for (int i = 0; i < numOfSnakes; i++) { // player snake in index 0
 			snakes[i] = new Snake(i);
+			System.out.println("Snake #" + (i+1) );
 		}
 		return snakes;
 	}
 	
 	/* DRAW SNAKES */
 	public void drawSnakes() { // draw Snakes
-		for (int i = 0; i < snakes.length; i++) {
+		for (int i = 0; i < snakes.length; i++) { // for each snake
 			snakes[i].moveSnake();
-			
-			fill(200);
-			stroke(200);
-			ellipse(snakes[i].positionX, snakes[i].positionY, 10,10);
+			for (int j=0; j<snakes[i].cells.size(); j++) {
+				ellipse(snakes[i].cells.get(j).positionX,snakes[i].cells.get(j).positionY, 10, 10);
+			}
 		}
 	}
 
@@ -63,24 +63,23 @@ public class RunSnakeGame extends PApplet{
 		if (key == CODED) {
 			switch (keyCode) {
 				case UP:
-					snakes[0].direction = 1;
-					snakes[0].directionY = -1;
+					snakes[0].cells.get(0).direction = 1;
+					snakes[0].cells.get(0).directionY = -1;
 					break;
 				case DOWN:
-					snakes[0].direction = 1;
-					snakes[0].directionY = 1;
+					snakes[0].cells.get(0).direction = 1;
+					snakes[0].cells.get(0).directionY = 1;
 					break;
 				case RIGHT:
-					snakes[0].direction = 0;
-					snakes[0].directionX = 1;
+					snakes[0].cells.get(0).direction = 0;
+					snakes[0].cells.get(0).directionX = 1;
 					break;
 				case LEFT:
-					snakes[0].direction = 0;
-					snakes[0].directionX = -1;
+					snakes[0].cells.get(0).direction = 0;
+					snakes[0].cells.get(0).directionX = -1;
 					break;	
 			}
 		}
 	}
-
 }
 
