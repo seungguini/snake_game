@@ -22,16 +22,18 @@ import processing.core.PApplet;
 
 public class RunSnakeGame extends PApplet{
 	
-	public Snake[] snakes = makeSnakes(1); // INCLUDES player snake (i.e. 5 snakes would be 1 player + 4 enemies)
+	public Snake[] snakes = makeSnakes(5); // INCLUDES player snake (i.e. 5 snakes would be 1 player + 4 enemies)
 
 	
 	/* SETUP */
 	public void setup() {
+		frameRate(15);
 		size (400,400); // setup canvas
 	}
 	
 	/* DRAW */
 	public void draw() {
+		background(255);
 		drawSnakes();
 	}
 	
@@ -48,9 +50,11 @@ public class RunSnakeGame extends PApplet{
 	/* DRAW SNAKES */
 	public void drawSnakes() { // draw Snakes
 		for (int i = 0; i < snakes.length; i++) {
-			ellipse(snakes[i].positionX, snakes[i].positionY, 10,10);
-
 			snakes[i].moveSnake();
+			
+			fill(200);
+			stroke(200);
+			ellipse(snakes[i].positionX, snakes[i].positionY, 10,10);
 		}
 	}
 
@@ -68,11 +72,11 @@ public class RunSnakeGame extends PApplet{
 					break;
 				case RIGHT:
 					snakes[0].direction = 0;
-					snakes[0].directionY = 1;
+					snakes[0].directionX = 1;
 					break;
 				case LEFT:
 					snakes[0].direction = 0;
-					snakes[0].directionY = -1;
+					snakes[0].directionX = -1;
 					break;	
 			}
 		}

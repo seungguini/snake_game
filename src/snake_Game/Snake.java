@@ -1,9 +1,12 @@
 package snake_Game;
 
 import processing.core.PApplet;
+import java.io.*;
+import java.util.*;
 
 public class Snake extends PApplet {
 	public float length; // length of snake
+	public ArrayList<Cell> cells = new ArrayList(); // ArrayList of Cell
 	
 	public float colorR;
 	public float colorG;
@@ -16,31 +19,37 @@ public class Snake extends PApplet {
 	
 	public float directionX; // 1 or -1
 	public float directionY; // 1 or -1
-	public float speed; // initial speed = 1
+	public float speed; // initial speed = size of snake
 	
 	public boolean life;
 	
 	public Snake(int identifier) { // constructor
 		this.life = true;
 		
-		this.length = 3;
+		this.length = 4;
 		
-		this.directionX = (float) Math.pow(-1, (double) random(0,1));
-		this.directionY = (float) Math.pow(-1, (double) random(0,1));
+		for (int i=0; i<this.length; i++) {
+			this.cells.add(new Cell()); // fill with empty cells	
+		}
 		
-		this.direction = random(0,1);
-		
-		this.speed = 1;		
-		this.positionX = random(20,380);
-		this.positionY = random(20,380);
+		this.directionX = 1;
+		this.directionY = 1;		
+		this.direction = 0;
+
+		this.speed = 10;		
+		this.positionX = 5;
+		this.positionY = 5;
 	}
 	
 	public void moveSnake() {
-		if (this.direction == 0) { // if snake is moving 
+		if (this.direction == 0) { // if snake is moving along X
 			this.positionX += this.directionX * this.speed;
-		} else {
-			
+			// System.out.println("Position X = " + this.positionX);
+		} else if (this.direction == 1) { // if snake is moving along Y
+			this.positionY += this.directionY * this.speed;
+			// System.out.println("Position Y = " + this.positionY);
 		}
-
 	}
+	
+	
 }
