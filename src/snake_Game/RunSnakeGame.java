@@ -1,11 +1,18 @@
-/*
+/* CREATER: SEUNGGUN LEE, NYU CAS Joint Major in Computer Science and Economics
+ * GitHub : seungguini
  * 
- *  Player snakes around, eating food, getting longer and accumulating scores
+ * Game Description:
+ * - Player snakes around, eating food, getting longer and accumulating scores
+ * - avoid hitting the walls or enemy snakes!
+ * - YOU: Red snake; use the UP, DOWN, LEFT, and RIGHT keys to control snake
+ * - ENEMY: Green snake; enemy snake will head towards the food! Avoid or kill it
+ * - FOOD: Blue dot; eat it to get an additional tail Cell!
  *  
+ *  [ BRAINSTORMING ]
  *  IDEAS:
  *  - enemy snakes w/ different colors
  *  - power ups --> enemy snakes become slower; food gets bigger
- *  - enemy goes toward the food w/ by itself/neuroscience
+ *  - enemy develops skills through neuroscience
  * 
  *  DIFFICULTY:
  *  - snake gets faster
@@ -22,12 +29,12 @@ import processing.core.PApplet;
 
 public class RunSnakeGame extends PApplet{
 	
-	public Snake[] snakes = makeSnakes(5); // INCLUDES player snake (i.e. 5 snakes would be 1 player + 4 enemies)
+	public Snake[] snakes = makeSnakes(2); // INCLUDES player snake (i.e. 5 snakes would be 1 player + 4 enemies)
 	public Food food = new Food();
 	
 	/* SETUP */
 	public void setup() {
-		frameRate(20);
+		frameRate(15);
 		size (400,400); // setup canvas
 	}
 	
@@ -79,6 +86,7 @@ public class RunSnakeGame extends PApplet{
 	
 	/* DRAW FOOD */
 	public void drawFood() {
+		fill(0,0,255);
 		ellipse(food.positionX, food.positionY, 10, 10);
 	}
 	
@@ -124,6 +132,9 @@ public class RunSnakeGame extends PApplet{
 				} 
 			}
 		} 
+	}
+	
+	public void displayScore() {
 		
 	}
 	
