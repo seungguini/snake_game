@@ -27,7 +27,7 @@ public class RunSnakeGame extends PApplet{
 	
 	/* SETUP */
 	public void setup() {
-		frameRate(10);
+		frameRate(20);
 		size (400,400); // setup canvas
 	}
 	
@@ -36,11 +36,11 @@ public class RunSnakeGame extends PApplet{
 		background(255); // erase background
 		drawSnakes();
 		drawFood();
-		CPUsnake();
 		if (foodEaten()) { // if food is eaten
 			resetFood(); // reset food
 			food.eaten = false; // set food to not eaten
 		}
+		CPUsnake();
 		
 		checkCollision();
 		for (int i=0; i<snakes.length; i++) {
@@ -131,20 +131,29 @@ public class RunSnakeGame extends PApplet{
 	public void CPUsnake() {
 		for (int i = 1; i < snakes.length; i++) {
 			Cell leadCell = snakes[i].cells.get(0);
-			if (leadCell.positionX < food.positionX) {
+			
+			if ( leadCell.positionX != food.positionX && leadCell.positionY != food.positionY ) {
+				leadCell.direction = round( random(0,1) ); // 
+			} else if ( leadCell.positionX == food.positionX ) {
+				leadCell.direction = 1;
+			} else if ( leadCell.positionY == food.positionY ){
 				leadCell.direction = 0;
+			}
+			
+			if (leadCell.positionX < food.positionX) {
 				leadCell.directionX = 1;
 			}
 			else if (leadCell.positionX > food.positionX) {
-				leadCell.direction = 0;
 				leadCell.directionX = -1;
-			} else if (leadCell.positionY < food.positionY) {
-				leadCell.direction = 1;
+			}
+			
+			if (leadCell.positionY < food.positionY) {
 				leadCell.directionY = 1;
-			} else if (leadCell.positionY > food.positionY) {
-				leadCell.direction = 1;
+			}
+			else if (leadCell.positionY > food.positionY) {
 				leadCell.directionY = -1;
 			}
+			System.out.println(leadCell.directionY);
 		}
 	}
 	

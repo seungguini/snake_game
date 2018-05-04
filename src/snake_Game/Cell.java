@@ -19,11 +19,11 @@ public class Cell extends PApplet{
 	public Cell(float positionX, float positionY) {
 		this.positionX = positionX;
 		this.positionY = positionY;
-		
-		this.directionX = 1;
-		this.directionY = 1;		
-		this.direction = 0;
 
+		this.directionX = -1;
+		this.directionY = -1;		
+		this.direction = 0;
+		
 		this.speed = 10;		
 	}
 	
