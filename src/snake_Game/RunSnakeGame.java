@@ -12,7 +12,7 @@
  *  
  *  AI snakes:
  *  - snake calculates whether its head X,Y positions are bigger or smaller than the food position;
- *  - constanlty check and change the position
+ *  - constantly check and change the position
  *  - enemy snakes should be slower than player's snake
  */
 
@@ -22,7 +22,7 @@ import processing.core.PApplet;
 
 public class RunSnakeGame extends PApplet{
 	
-	public Snake[] snakes = makeSnakes(3); // INCLUDES player snake (i.e. 5 snakes would be 1 player + 4 enemies)
+	public Snake[] snakes = makeSnakes(5); // INCLUDES player snake (i.e. 5 snakes would be 1 player + 4 enemies)
 	public Food food = new Food();
 	
 	/* SETUP */
@@ -36,9 +36,18 @@ public class RunSnakeGame extends PApplet{
 		background(255); // erase background
 		drawSnakes();
 		drawFood();
+		CPUsnake();
 		if (foodEaten()) { // if food is eaten
 			resetFood(); // reset food
 			food.eaten = false; // set food to not eaten
+		}
+		
+		checkCollision();
+		for (int i=0; i<snakes.length; i++) {
+			if (!snakes[i].life) { // if snake is dead
+				snakes[i].resetSnake();
+				snakes[i].life = true;
+			}
 		}
 	}
 	
@@ -58,6 +67,11 @@ public class RunSnakeGame extends PApplet{
 		for (int i = 0; i < snakes.length; i++) { // for each snake
 			snakes[i].moveSnake();
 			for (int j=0; j<snakes[i].cells.size(); j++) {
+				if (i==0) {
+					fill(255,0,0);
+				} else {
+					fill(0,255,0);
+				}
 				ellipse(snakes[i].cells.get(j).positionX,snakes[i].cells.get(j).positionY, 10, 10);
 			}
 		}
@@ -87,7 +101,53 @@ public class RunSnakeGame extends PApplet{
 		}
 		return false;
 	}
-
+	
+	/* CHECK COLLISION */
+	/* kills snake if 1. it hits the wall 2. it hits another snake */
+	public void checkCollision() {
+		for (int i=0; i<snakes.length; i++) { // this checks wall collision
+			Cell leadCell = snakes[i].cells.get(0);
+			if (leadCell.positionX < 4 || leadCell.positionX > 396 || leadCell.positionY < 4 || leadCell.positionY > 396) {
+				snakes[i].life = false;
+			}
+		}
+		for (int i=0; i<snakes.length; i++) { // this checks snake-snake collision
+			Cell leadCell = snakes[i].cells.get(0); // get leadCell of each snake
+			for (int j=0; j<snakes.length; j++) { // of each snake
+				if (j != i) { // snake can hit itself
+					for(int k=0; k<snakes[j].cells.size(); k++) { // check if leadCell is hitting other cell
+						Cell targetCell = snakes[j].cells.get(k);
+						if ( (leadCell.positionX == targetCell.positionX) && (leadCell.positionY == targetCell.positionY) ) {
+							snakes[i].life = false;
+						}
+					}
+				} 
+			}
+		} 
+		
+	}
+	
+	/* the intelligence of computer snakes*/
+	public void CPUsnake() {
+		for (int i = 1; i < snakes.length; i++) {
+			Cell leadCell = snakes[i].cells.get(0);
+			if (leadCell.positionX < food.positionX) {
+				leadCell.direction = 0;
+				leadCell.directionX = 1;
+			}
+			else if (leadCell.positionX > food.positionX) {
+				leadCell.direction = 0;
+				leadCell.directionX = -1;
+			} else if (leadCell.positionY < food.positionY) {
+				leadCell.direction = 1;
+				leadCell.directionY = 1;
+			} else if (leadCell.positionY > food.positionY) {
+				leadCell.direction = 1;
+				leadCell.directionY = -1;
+			}
+		}
+	}
+	
 	/* DETECT MOVEMENT */
 	public void keyPressed() {
 		if (key == CODED) {

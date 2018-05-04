@@ -25,8 +25,6 @@ public class Cell extends PApplet{
 		this.direction = 0;
 
 		this.speed = 10;		
-		this.positionX = 5;
-		this.positionY = 5;
 	}
 	
 	/* MOVE FIRST CELL */

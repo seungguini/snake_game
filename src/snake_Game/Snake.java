@@ -25,7 +25,7 @@ public class Snake extends PApplet {
 	public void makeCells() {
 		for (int i=0; i<this.length; i++) { // make Cells --> first cell gets controlled, other cells follow
 			if (cells.isEmpty()) {
-				cells.add( new Cell(5,5) ); // add first cell
+				cells.add( new Cell(5 + floor (random(1,39)) * 10, 5 + floor (random(1,39)) * 10) ); // add first cell
 			} else {
 				cells.add( new Cell(cells.get(i-1).positionX, cells.get(i-1).positionY)); // succeeding Cells have position of the preceeding Cells
 			}
@@ -46,5 +46,10 @@ public class Snake extends PApplet {
 	public void addCell() {
 		cells.add( new Cell( cells.get(cells.size()-1).positionX, cells.get(cells.size()-1).positionX) );
 		System.out.println("there are " + cells.size() + " cells!");
+	}
+	
+	public void resetSnake() {
+		this.cells.clear();
+		this.makeCells();
 	}
 }
