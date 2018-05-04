@@ -31,7 +31,7 @@ public class Cell extends PApplet{
 	
 	/* MOVE FIRST CELL */
 	public void controlCell() {
-		System.out.println("moving first Cell");
+		//System.out.println("moving first Cell");
 		if (this.direction == 0) { // if snake is moving along X
 			this.positionX += this.directionX * this.speed;
 			// System.out.println("Position X = " + this.positionX);
@@ -43,7 +43,7 @@ public class Cell extends PApplet{
 	
 	/* MOVE NON-FIRST CELLS */
 	public void moveCell(float fatherX, float fatherY) { // gets x and y position of father cells
-		System.out.println("moving rest of the cells");
+		// System.out.println("moving rest of the cells");
 		this.positionX = fatherX;
 		this.positionY = fatherY;
 	}

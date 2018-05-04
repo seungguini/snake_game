@@ -23,7 +23,7 @@ import processing.core.PApplet;
 public class RunSnakeGame extends PApplet{
 	
 	public Snake[] snakes = makeSnakes(3); // INCLUDES player snake (i.e. 5 snakes would be 1 player + 4 enemies)
-
+	public Food food = new Food();
 	
 	/* SETUP */
 	public void setup() {
@@ -33,8 +33,13 @@ public class RunSnakeGame extends PApplet{
 	
 	/* DRAW */
 	public void draw() {
-		background(255);
+		background(255); // erase background
 		drawSnakes();
+		drawFood();
+		if (foodEaten()) { // if food is eaten
+			resetFood(); // reset food
+			food.eaten = false; // set food to not eaten
+		}
 	}
 	
 	/* MAKE SNAKES */
@@ -56,6 +61,31 @@ public class RunSnakeGame extends PApplet{
 				ellipse(snakes[i].cells.get(j).positionX,snakes[i].cells.get(j).positionY, 10, 10);
 			}
 		}
+	}
+	
+	/* DRAW FOOD */
+	public void drawFood() {
+		ellipse(food.positionX, food.positionY, 10, 10);
+	}
+	
+	/* RESET FOOD */
+	public void resetFood() {
+		food.randomizePosition();
+	}
+	
+	public boolean isEaten() {
+		return food.eaten;
+	}
+	
+	public boolean foodEaten() {
+		for (int i = 0; i < snakes.length; i++) { // player snake in index 0
+			food.checkEaten(snakes[i].cells.get(0).positionX, snakes[i].cells.get(0).positionY);
+			if (food.eaten) {
+				snakes[i].addCell();
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/* DETECT MOVEMENT */
@@ -81,5 +111,6 @@ public class RunSnakeGame extends PApplet{
 			}
 		}
 	}
+
 }
 

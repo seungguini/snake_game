@@ -42,4 +42,9 @@ public class Snake extends PApplet {
 			}
 		}
 	}
+	
+	public void addCell() {
+		cells.add( new Cell( cells.get(cells.size()-1).positionX, cells.get(cells.size()-1).positionX) );
+		System.out.println("there are " + cells.size() + " cells!");
+	}
 }
