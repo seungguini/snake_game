@@ -40,22 +40,27 @@ public class RunSnakeGame extends PApplet{
 	
 	/* DRAW */
 	public void draw() {
-		background(255); // erase background
-		drawSnakes();
-		drawFood();
-		if (foodEaten()) { // if food is eaten
-			resetFood(); // reset food
-			food.eaten = false; // set food to not eaten
-		}
-		CPUsnake();
-		
-		checkCollision();
-		for (int i=0; i<snakes.length; i++) {
-			if (!snakes[i].life) { // if snake is dead
-				snakes[i].resetSnake();
-				snakes[i].life = true;
+		if (snakes[0].life) {
+			background(255); // erase background
+			drawSnakes();
+			drawFood();
+			if (foodEaten()) { // if food is eaten
+				resetFood(); // reset food
+				food.eaten = false; // set food to not eaten
 			}
+			CPUsnake();
+			
+			checkCollision();
+			for (int i=1; i<snakes.length; i++) {
+				if (!snakes[i].life) { // if snake is dead
+					snakes[i].resetSnake();
+					snakes[i].life = true;
+				}
+			}
+		} else {
+			displayScore();
 		}
+
 	}
 	
 	/* MAKE SNAKES */
@@ -135,7 +140,11 @@ public class RunSnakeGame extends PApplet{
 	}
 	
 	public void displayScore() {
-		
+		fill(0);
+		String timeText = "GAME OVER";
+		text( timeText, 100, 200);
+		String finalScore = "Your snake was " + snakes[0].cells.size() + " Cells long before it died!";
+		text( finalScore, 100, 250);
 	}
 	
 	/* the intelligence of computer snakes*/
@@ -164,7 +173,6 @@ public class RunSnakeGame extends PApplet{
 			else if (leadCell.positionY > food.positionY) {
 				leadCell.directionY = -1;
 			}
-			System.out.println(leadCell.directionY);
 		}
 	}
 	
